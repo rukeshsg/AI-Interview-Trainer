@@ -1,0 +1,74 @@
+# Dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+
+# Build and compile outputs
+dist/
+**/dist/
+build/
+**/build/
+dist-ssr/
+*.tsbuildinfo
+.cache/
+.parcel-cache/
+
+# Environment configuration (NEVER commit secrets or API keys)
+.env
+.env.*
+!.env.example
+
+# SQLite Database & Data files
+data/
+**/data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db-wal
+*.db-shm
+
+# File uploads (resumes, temporary candidate media)
+uploads/
+**/uploads/
+
+# Logs
+logs/
+**/logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Operating System & Editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing & Coverage
+coverage/
+**/coverage/
+.nyc_output/
+
+# Python artifacts
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
