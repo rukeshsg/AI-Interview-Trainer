@@ -256,17 +256,17 @@ The platform includes a dedicated **Voice Interview** mode for hands-free spoken
 
 ---
 
-## 🎬 Video Demo
+## 🎬 Live Deployed Video Demonstration
 
-Watch the real-time AI Interview Trainer conversational flow and answer evaluation:
+Watch the complete live walkthrough and demonstration of the deployed **AI Interview Trainer** system running on Vercel and Render:
 
 <p align="center">
-  <a href="docs/videos/chat-response.mp4">
-    <img src="docs/screenshots/07-ai-assistant.png" alt="AI Interview Trainer Chat Response Demo" width="850" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
+  <a href="docs/videos/deployed-system-demo.mp4">
+    <img src="docs/screenshots/01-landing-page.png" alt="AI Interview Trainer Deployed System Video Demonstration" width="850" style="border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15);" />
   </a>
 </p>
 
-> 🎥 **[Click here to watch the full Chat & Interview Evaluation Video Demo](docs/videos/chat-response.mp4)** *(MP4 format)*
+> 🎥 **[Click here to watch the full demonstration of the deployed system (Vercel & Render)](docs/videos/deployed-system-demo.mp4)** *(High Definition MP4 format — Deployed Production Result)*
 
 ---
 
@@ -334,14 +334,6 @@ Watch the real-time AI Interview Trainer conversational flow and answer evaluati
 *Detailed evaluation dossier with readiness verdicts, competency breakdowns, strengths, growth areas, and full question audits.*
 <p align="center">
   <img src="docs/screenshots/08-performance-report.png" alt="Candidate Performance Report" width="900" />
-</p>
-
-<br/>
-
-### 9. Interview History & Tracking
-*Persistent archive of completed sessions with score indicators, date filters, and instant report access.*
-<p align="center">
-  <img src="docs/screenshots/09-interview-history.png" alt="Interview History" width="900" />
 </p>
 
 </div>
@@ -550,7 +542,7 @@ This project was developed as part of the **IBM SkillsBuild / AICTE Internship i
 - **API Health Check Endpoint:** [https://ai-interview-trainer-backend-5s3m.onrender.com/api/health](https://ai-interview-trainer-backend-5s3m.onrender.com/api/health)
 - **GitHub Repository:** [https://github.com/rukeshsg/AI-Interview-Trainer](https://github.com/rukeshsg/AI-Interview-Trainer)
 - **Recommended GitHub Topics:** `ai`, `artificial-intelligence`, `interview-preparation`, `rag`, `ibm`, `ibm-watsonx`, `watsonx-orchestrate`, `ibm-cloud`, `react`, `typescript`
-- **Demo Video:** [docs/videos/chat-response.mp4](docs/videos/chat-response.mp4)
+- **Deployed System Video Demo:** [docs/videos/deployed-system-demo.mp4](docs/videos/deployed-system-demo.mp4)
 
 ---
 
