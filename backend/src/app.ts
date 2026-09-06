@@ -25,6 +25,14 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // ── Routes ──────────────────────────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.json({
+    name: 'AI Interview Trainer API',
+    status: 'online',
+    message: 'Backend API is running successfully.',
+    health: '/api/health',
+  });
+});
 app.use('/api/health', healthRouter);
 app.use('/api/ai/status', healthRouter);
 app.use('/api/profile', profileRouter);
