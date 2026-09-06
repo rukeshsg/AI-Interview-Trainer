@@ -62,7 +62,7 @@ router.post('/upload', (req: Request, res: Response, next: NextFunction) => {
       const resumeData = await parseResume(file.path, file.mimetype);
 
       // Clean up temp file after parsing
-      fs.unlink(file.path, () => {});
+      fs.unlink(file.path, () => { });
 
       res.json({
         success: true,
@@ -72,7 +72,7 @@ router.post('/upload', (req: Request, res: Response, next: NextFunction) => {
       });
     } catch (parseErr: unknown) {
       // Clean up file even on error
-      if (file.path) fs.unlink(file.path, () => {});
+      if (file.path) fs.unlink(file.path, () => { });
 
       console.error('[Resume] Parse error:', (parseErr as Error).message);
       res.status(422).json({
