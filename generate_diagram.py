@@ -1,222 +1,230 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import FancyBboxPatch, Polygon, Circle, Rectangle
+from matplotlib.patches import FancyBboxPatch
 
-# Configure presentation fonts
+# Set clean presentation fonts
 plt.rcParams['font.sans-serif'] = ['Segoe UI', 'Arial', 'Helvetica', 'DejaVu Sans']
 plt.rcParams['font.family'] = 'sans-serif'
 
-def draw_cylinder(ax, x, y, w, h, label, fc='#FFFFFF', ec='#475569', tc='#0F172A', tag=''):
-    """Draws a clean database cylinder shape"""
-    ellipse_h = h * 0.28
-    
-    # Body rectangle
-    body = Rectangle((x, y - h + ellipse_h/2), w, h - ellipse_h, fc=fc, ec=ec, lw=1.2, zorder=4)
-    ax.add_patch(body)
-    
-    # Bottom ellipse
-    bottom = patches.Ellipse((x + w/2, y - h + ellipse_h/2), w, ellipse_h, fc=fc, ec=ec, lw=1.2, zorder=3)
-    ax.add_patch(bottom)
-    
-    # Top ellipse (rim)
-    top = patches.Ellipse((x + w/2, y - ellipse_h/2), w, ellipse_h, fc=fc, ec=ec, lw=1.2, zorder=5)
-    ax.add_patch(top)
-    
-    # Text
-    lines = label.split('\n')
-    line_h = 2.0
-    start_y = (y - h/2) + ((len(lines)-1) * line_h / 2) - 0.5
-    for i, line in enumerate(lines):
-        is_bold = (i == 0)
-        ax.text(x + w/2, start_y - (i * line_h), line, fontsize=7.2 if not is_bold else 7.8,
-                fontweight='bold' if is_bold else 'normal', color=tc, ha='center', va='center', zorder=6)
-    
-    if tag:
-        ax.text(x + w/2, y - h + 1.8, f"[{tag}]", fontsize=6.2, fontweight='bold', color='#15803D', ha='center', va='center', zorder=6)
-
-def draw_block_diagram():
+def draw_clean_architecture():
+    # 16:9 ratio high-resolution figure (1920x1080 equivalent at high DPI)
     fig, ax = plt.subplots(figsize=(16, 9), dpi=300)
-    fig.patch.set_facecolor('#F8FAFC')
-    ax.set_facecolor('#F8FAFC')
+    fig.patch.set_facecolor('#FFFFFF')
+    ax.set_facecolor('#FFFFFF')
     ax.set_xlim(0, 160)
     ax.set_ylim(0, 90)
     ax.axis('off')
 
     # ─────────────────────────────────────────────────────────────────────────
-    # HEADER
+    # HEADER (Clean, Professional, Minimal)
     # ─────────────────────────────────────────────────────────────────────────
-    ax.text(6, 86.0, "AI Interview Trainer", fontsize=18, fontweight='bold', color='#0F172A', va='center')
-    ax.text(42, 86.0, "– System Architecture Blueprint", fontsize=15, fontweight='semibold', color='#2563EB', va='center')
-    ax.text(6, 83.2, "Problem Statement No. 22: Interview Trainer Agent  |  IBM University Engagement / AICTE Project Track", 
-            fontsize=9.0, fontweight='medium', color='#64748B', va='center')
+    ax.text(8, 85.5, "AI Interview Trainer", fontsize=19, fontweight='bold', color='#0F172A', va='center')
+    ax.text(48, 85.5, "– System Architecture & Flow", fontsize=15, fontweight='semibold', color='#2563EB', va='center')
+    ax.text(8, 82.5, "Problem Statement No. 22: Interview Trainer Agent  |  IBM University Engagement / AICTE Project Track", 
+            fontsize=9.2, color='#64748B', va='center')
 
-    # Top badges
-    def draw_top_badge(x, y, text, bg, border, fg):
-        bw = len(text)*0.88 + 4.0
-        ax.add_patch(FancyBboxPatch((x, y-1.4), bw, 2.8, boxstyle="round,pad=0.2", fc=bg, ec=border, lw=1.0, zorder=3))
-        ax.text(x + bw/2, y, text, fontsize=7.2, fontweight='bold', color=fg, ha='center', va='center', zorder=4)
+    # Header Badges
+    def draw_badge(x, y, text, bg, border, fg):
+        bw = len(text) * 0.9 + 4.0
+        ax.add_patch(FancyBboxPatch((x, y-1.5), bw, 3.0, boxstyle="round,pad=0.2", fc=bg, ec=border, lw=1.0, zorder=3))
+        ax.text(x + bw/2, y, text, fontsize=7.5, fontweight='bold', color=fg, ha='center', va='center', zorder=4)
 
-    draw_top_badge(108, 84.5, "IBM watsonx Orchestrate", "#EFF6FF", "#BFDBFE", "#1D4ED8")
-    draw_top_badge(134, 84.5, "RAG Knowledge Layer", "#F0FDF4", "#BBF7D0", "#15803D")
+    draw_badge(106, 84.0, "IBM watsonx Orchestrate", "#EFF6FF", "#BFDBFE", "#1D4ED8")
+    draw_badge(134, 84.0, "RAG Knowledge Base", "#F0FDF4", "#BBF7D0", "#15803D")
 
-    # Top divider
-    ax.plot([6, 154], [81.0, 81.0], color='#CBD5E1', lw=1.0, zorder=2)
+    # Header Divider Line
+    ax.plot([8, 152], [80.0, 80.0], color='#E2E8F0', lw=1.2, zorder=2)
 
     # ─────────────────────────────────────────────────────────────────────────
-    # SUBGRAPH CONTAINERS
+    # DRAWING UTILITIES
     # ─────────────────────────────────────────────────────────────────────────
-    def draw_subgraph(x, y, w, h, title, subtitle="", bg="#FFFFFF", border="#CBD5E1", title_col="#0F172A", is_ibm=False):
-        # Container background box
-        ax.add_patch(FancyBboxPatch((x, y - h), w, h, boxstyle="round,pad=0.4", fc=bg, ec=border, lw=1.8 if is_ibm else 1.2, zorder=1))
-        # Container title
-        ax.text(x + 2.0, y - 2.0, title, fontsize=9.0, fontweight='bold', color=title_col, va='center', zorder=2)
-        if subtitle:
-            ax.text(x + w - 2.0, y - 2.0, subtitle, fontsize=7.2, fontweight='semibold', color='#64748B', ha='right', va='center', zorder=2)
-
-    # Card / Node inside subgraphs
-    def draw_node(x, y, w, h, title, subtitle="", fc="#FFFFFF", ec="#94A3B8", tc="#0F172A", lw=1.0, is_primary=False):
-        ax.add_patch(FancyBboxPatch((x, y - h), w, h, boxstyle="round,pad=0.3",
-                                   fc='#EFF6FF' if is_primary else fc,
-                                   ec='#2563EB' if is_primary else ec,
-                                   lw=1.5 if is_primary else lw, zorder=4))
+    def draw_box(x, y, w, h, title, subtitle="", items=None, fc="#FFFFFF", ec="#CBD5E1", tc="#0F172A", is_highlight=False, hl_color="#0F62FE"):
+        # Base box
+        ax.add_patch(FancyBboxPatch((x, y - h), w, h, boxstyle="round,pad=0.35",
+                                   fc=fc, ec=hl_color if is_highlight else ec, lw=2.0 if is_highlight else 1.2, zorder=3))
         
-        lines = title.split('\n')
+        # Header text
         if subtitle:
-            lines.append(subtitle)
-        
-        line_h = 2.0
-        start_y = (y - h/2) + ((len(lines)-1) * line_h / 2)
-        for i, line in enumerate(lines):
-            is_sub = (subtitle and i == len(lines)-1)
-            is_first = (i == 0)
-            ax.text(x + w/2, start_y - (i * line_h), line,
-                    fontsize=6.8 if is_sub else (7.8 if is_first else 7.2),
-                    fontweight='normal' if is_sub else ('bold' if is_first else 'medium'),
-                    color='#64748B' if is_sub else tc,
-                    ha='center', va='center', zorder=5)
+            ax.text(x + w/2, y - 2.2, title, fontsize=9.2, fontweight='bold', color=tc, ha='center', va='center', zorder=4)
+            ax.text(x + w/2, y - 4.2, subtitle, fontsize=7.2, fontweight='medium', color='#64748B', ha='center', va='center', zorder=4)
+            curr_y = y - 6.4
+        else:
+            ax.text(x + w/2, y - (h/2 if not items else 2.5), title, fontsize=9.2, fontweight='bold', color=tc, ha='center', va='center', zorder=4)
+            curr_y = y - 4.8
 
-    def draw_conn(p1, p2, label="", color="#64748B", lw=1.3, style="->", rad=0.0):
+        # Bullet items
+        if items:
+            for item in items:
+                ax.plot(x + 2.5, curr_y, marker='o', markersize=2.8, color=hl_color if is_highlight else '#3B82F6', zorder=4)
+                ax.text(x + 4.2, curr_y, item, fontsize=7.3, color='#334155', va='center', zorder=4)
+                curr_y -= 2.1
+
+    def draw_arrow(p1, p2, label="", color="#64748B", lw=1.6, style="->", rad=0.0):
         ax.annotate('', xy=p2, xytext=p1,
-                    arrowprops=dict(arrowstyle=f"{style},head_width=0.4,head_length=0.6",
-                                    connectionstyle=f"arc3,rad={rad}", color=color, lw=lw), zorder=3)
+                    arrowprops=dict(arrowstyle=f"{style},head_width=0.45,head_length=0.65",
+                                    connectionstyle=f"arc3,rad={rad}", color=color, lw=lw), zorder=2)
         if label:
             mx = (p1[0] + p2[0]) / 2
-            my = (p1[1] + p2[1]) / 2 + (1.2 if rad==0 else 0)
+            my = (p1[1] + p2[1]) / 2
             lbl_w = len(label) * 0.72 + 2.0
-            ax.add_patch(FancyBboxPatch((mx - lbl_w/2, my - 1.2), lbl_w, 2.4, boxstyle="round,pad=0.1",
-                                       fc='#FFFFFF', ec='#E2E8F0', lw=0.8, zorder=6))
-            ax.text(mx, my, label, fontsize=6.5, fontweight='bold', color=color, ha='center', va='center', zorder=7)
+            ax.add_patch(FancyBboxPatch((mx - lbl_w/2, my - 1.1), lbl_w, 2.2, boxstyle="round,pad=0.1",
+                                       fc='#FFFFFF', ec='#E2E8F0', lw=0.8, zorder=5))
+            ax.text(mx, my, label, fontsize=6.8, fontweight='bold', color=color, ha='center', va='center', zorder=6)
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 1. FRONTEND LAYER (TOP CONTAINER)
+    # LEFT PIPELINE: CANDIDATE -> APP -> BACKEND -> IBM AGENT & RAG
     # ─────────────────────────────────────────────────────────────────────────
-    draw_subgraph(6, 79, 148, 16, "Frontend Client Layer (Vercel SPA)", "React 19  •  TypeScript  •  Vite  •  Tailwind CSS 4",
-                  bg="#F8FAFC", border="#93C5FD", title_col="#1D4ED8")
+    left_x = 10
+    box_w = 42
 
-    draw_node(9, 74.5, 23, 8.5, "Candidate Profile Setup\n& Flight Deck", "Target Role & Skills")
-    draw_node(36, 74.5, 23, 8.5, "Resume Ingestion UI\n(PDF / DOCX)", "Keyword Extraction")
-    draw_node(63, 74.5, 25, 8.5, "Mock Interview Arena\n(One-at-a-Time)", "Live Q&A Simulation", is_primary=True)
-    draw_node(92, 74.5, 24, 8.5, "AI Career Coach\nChat Interface", "Markdown & Code Copy")
-    draw_node(120, 74.5, 20, 8.5, "Web Speech Audio Client\n(Browser Native STT/TTS)", "Microphone & Speaker")
-    draw_node(142, 74.5, 10, 8.5, "AppContext\nState Store", "Session")
+    # Step 1: Candidate Profile / Resume
+    draw_box(left_x, 76.5, box_w, 9.5, "1. Candidate Profile & Resume", "", [
+        "Candidate Identity, Target Role & Level",
+        "Skills, Target Company & Preferences",
+        "PDF / DOCX Resume Text Ingestion"
+    ], fc="#F8FAFC", ec="#94A3B8")
+
+    draw_arrow((left_x + box_w/2, 67.0), (left_x + box_w/2, 63.5))
+
+    # Step 2: React Web Application
+    draw_box(left_x, 63.5, box_w, 9.5, "2. React Web Application (Client)", "React 19  •  TypeScript  •  Vite  •  Tailwind CSS", [
+        "Candidate Flight Deck & Setup Matrix",
+        "One-Question-at-a-Time Mock Arena",
+        "AI Coaching Assistant Chat Interface"
+    ], fc="#F0F9FF", ec="#7DD3FC", tc="#0369A1")
+
+    draw_arrow((left_x + box_w/2, 54.0), (left_x + box_w/2, 50.5), label="HTTPS REST")
+
+    # Step 3: Node.js Backend / REST API
+    draw_box(left_x, 50.5, box_w, 9.5, "3. Node.js Backend / REST API", "Node.js 20  •  Express 4  •  SQLite Persistence", [
+        "Interview Session & History Manager",
+        "Resume Parser Module (pdf-parse / mammoth)",
+        "Prompt Engine & JSON Schema Normalizer"
+    ], fc="#F8FAFC", ec="#94A3B8")
+
+    draw_arrow((left_x + box_w/2, 41.0), (left_x + box_w/2, 37.5), label="IAM Auth & Chat REST", color="#0F62FE")
+
+    # Step 4: IBM watsonx Orchestrate (Prominent Box)
+    draw_box(left_x, 37.5, box_w, 11.5, "4. IBM watsonx Orchestrate", "AI Agent & Orchestration Layer (IBM Cloud)", [
+        "Live REST Endpoint: /chat/completions",
+        "IAM Token Exchange & Security Pipeline",
+        "Autonomous Agent Execution Engine"
+    ], fc="#EFF6FF", ec="#0F62FE", tc="#0F62FE", is_highlight=True, hl_color="#0F62FE")
+
+    draw_arrow((left_x + box_w/2, 26.0), (left_x + box_w/2, 22.5), color="#0F62FE")
+
+    # Step 5: Interview Trainer Agent
+    draw_box(left_x, 22.5, box_w, 10.5, "5. Interview Trainer Agent", "Configured Agent Core", [
+        "Personalized Question Generation",
+        "Real-Time 5-Rubric Answer Evaluation",
+        "Model Answer Guidance & Suggestions"
+    ], fc="#EFF6FF", ec="#0F62FE", tc="#1E3A8A", is_highlight=True, hl_color="#0F62FE")
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 2. BACKEND API LAYER (MIDDLE CONTAINER)
+    # CENTER: RAG KNOWLEDGE BASE (Connected Bidirectionally to Agent)
     # ─────────────────────────────────────────────────────────────────────────
-    draw_subgraph(6, 59.5, 148, 22.5, "Backend API Layer (Render Web Service)", "Node.js 20  •  Express 4  •  TypeScript",
-                  bg="#F8FAFC", border="#64748B", title_col="#0F172A")
+    rag_x = 60
+    rag_w = 40
 
-    # Express Gateway
-    draw_node(63, 56.0, 25, 6.0, "Node.js 20 Express REST API", "Central Router & Controllers", is_primary=True)
+    # Bidirectional connector Agent <-> RAG Knowledge Base
+    draw_arrow((left_x + box_w, 17.2), (rag_x, 17.2), style="<->", label="RAG Grounding", color="#16A34A", lw=2.0)
 
-    # Backend components inside container
-    draw_node(9, 48.0, 23, 7.5, "IBM Cloud IAM Token Manager\n(OAuth2 Bearer Token Auth)", "Identity & Access")
-    draw_node(36, 48.0, 23, 7.5, "Prompt Builder & Engine\n(Context & Schema Normalizer)", "promptBuilder.ts")
-    draw_node(63, 48.0, 25, 7.5, "Interview Session Manager\n(State & History Controller)", "interview.ts")
-    draw_node(92, 48.0, 24, 7.5, "Resume Parser Module\n(pdf-parse / mammoth)", "resumeParser.ts")
-    draw_node(120, 48.0, 31, 7.5, "Score Calculator Engine (5 Rubrics)\n& Response Parser Normalizer", "scoreCalculator.ts")
-
-    # Sub-container: Storage Layer (nested inside backend)
-    draw_subgraph(9, 39.5, 50, 2.0, "", "") # visual backing
-    draw_cylinder(ax, 11, 40.0, 21, 7.2, "SQLite Embedded DB\n(@databases/sqlite)", tag="ACID Store")
-    draw_node(36, 39.0, 21, 6.2, "Local Temporary\nResume Uploads", "File Storage")
+    # Step 6: RAG Knowledge Base (Prominent Box)
+    draw_box(rag_x, 24.5, rag_w, 14.5, "RAG Knowledge Base", "Curated Domain Grounding Layer", [
+        "Technical Knowledge (Python, SQL, System)",
+        "HR & Cultural Alignment Benchmarks",
+        "Behavioral STAR Method Evaluation Guides",
+        "5-Dimension Scoring Rubrics & Matrices",
+        "Interview Preparation Strategies"
+    ], fc="#F0FDF4", ec="#22C55E", tc="#15803D", is_highlight=True, hl_color="#22C55E")
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 3. IBM CLOUD & AI INFRASTRUCTURE (BOTTOM CONTAINER)
+    # RIGHT PIPELINE: QUESTIONS -> CANDIDATE ANSWER -> EVALUATION -> REPORT
     # ─────────────────────────────────────────────────────────────────────────
-    draw_subgraph(6, 33.5, 148, 24.5, "IBM Cloud & AI Infrastructure", "Hosted IBM Cloud Enterprise Environment",
-                  bg="#FFFFFF", border="#0F62FE", title_col="#0F62FE", is_ibm=True)
+    right_x = 108
+    right_w = 44
 
-    # IBM watsonx Orchestrate Sub-Box (Prominent)
-    draw_subgraph(9, 30.0, 95, 19.5, "IBM watsonx Orchestrate — AI Agent & Orchestration Layer", "POST /v1/orchestrate/{agentId}/chat/completions",
-                  bg="#EFF6FF", border="#0F62FE", title_col="#0F62FE", is_ibm=True)
+    # Connect Agent -> Questions
+    draw_arrow((left_x + box_w, 20.5), (right_x, 72.0), label="Generates Questions", color="#2563EB", lw=2.0, rad=-0.25)
 
-    # Orchestrate API
-    draw_node(13, 26.0, 26, 6.0, "watsonx Orchestrate API\n(IAM Bearer Authenticated)", "Secure Gateway", is_primary=True)
+    # Step 7: Interview Questions
+    draw_box(right_x, 76.5, right_w, 9.5, "6. Interview Questions", "Personalized & Adaptive Delivery", [
+        "Technical Questions (60% Weight)",
+        "HR & Cultural Fit Questions (20% Weight)",
+        "Behavioral STAR Questions (20% Weight)",
+        "Difficulty Calibration (Easy, Medium, Hard)"
+    ], fc="#F8FAFC", ec="#94A3B8")
 
-    # Interview Trainer Agent Core Box
-    draw_node(43, 26.5, 33, 13.5, "Interview Trainer Agent Core",
-              "• Adaptive Question Generation (Tech/HR/STAR)\n• Real-Time 5-Rubric Answer Evaluation\n• Reference Model Answer Synthesis\n• Targeted Improvement Recommendations\n• Conversational Career Strategy Coaching",
-              fc="#FFFFFF", ec="#0F62FE", tc="#0F172A", lw=1.5)
+    draw_arrow((right_x + right_w/2, 67.0), (right_x + right_w/2, 63.5), label="Candidate Responds")
 
-    # RAG Knowledge Base Cylinder
-    draw_cylinder(ax, 80, 26.5, 21, 13.5, "RAG Knowledge Base\n(Curated Domain Material)\n\n• Tech (Python, SQL, System)\n• HR & Behavioral STAR\n• Evaluation Rubric Matrices",
-                  fc="#F0FDF4", ec="#22C55E", tc="#15803D", tag="Grounding Layer")
+    # Step 8: Candidate Answer
+    draw_box(right_x, 63.5, right_w, 8.5, "7. Candidate Answer", "Multimodal Response Input", [
+        "Text Response & Code Entry",
+        "Spoken Audio Response Capture",
+        "Real-Time Response Submission"
+    ], fc="#F8FAFC", ec="#94A3B8")
 
-    # IBM Watson Speech Services Box
-    draw_subgraph(109, 30.0, 42, 19.5, "IBM Watson Speech Services", "Dual-Tier Voice Processing",
-                  bg="#FFFBEB", border="#F59E0B", title_col="#B45309")
+    draw_arrow((right_x + right_w/2, 55.0), (right_x + right_w/2, 51.5))
+
+    # Step 9: AI Answer Evaluation
+    draw_box(right_x, 51.5, right_w, 12.0, "8. AI Answer Evaluation", "5 Standardized Competency Rubrics", [
+        "Technical Accuracy (30% Weight)",
+        "Relevance & Direct Alignment (25% Weight)",
+        "Clarity & Structure (20% Weight)",
+        "Completeness & Depth (15% Weight)",
+        "Communication Acumen (10% Weight)"
+    ], fc="#EFF6FF", ec="#3B82F6", tc="#1D4ED8")
+
+    draw_arrow((right_x + right_w/2, 39.5), (right_x + right_w/2, 36.0), label="Session Aggregation")
+
+    # Step 10: Performance Report
+    draw_box(right_x, 36.0, right_w, 11.5, "9. Performance Report Dossier", "Final Executive Assessment", [
+        "Overall Weighted Score (/10.0)",
+        "Demonstrated Strengths & Positives",
+        "Identified Growth Areas & Gaps",
+        "Role-Specific Improvement Tips",
+        "Interview Readiness Level Verdict"
+    ], fc="#F8FAFC", ec="#0F172A", tc="#0F172A")
+
+    # ─────────────────────────────────────────────────────────────────────────
+    # SUPPORTING VOICE BRANCH (Center Middle)
+    # ─────────────────────────────────────────────────────────────────────────
+    voice_x = 58
+    voice_y = 66.5
+    voice_w = 44
+    voice_h = 16.0
+
+    ax.add_patch(FancyBboxPatch((voice_x, voice_y - voice_h), voice_w, voice_h, boxstyle="round,pad=0.3",
+                               fc='#FFFBEB', ec='#F59E0B', lw=1.2, linestyle='--', zorder=3))
     
-    draw_node(112, 25.5, 36, 6.0, "IBM Speech-to-Text (STT)\nCandidate Voice -> Transcribed Text", "High-Fidelity Audio")
-    draw_node(112, 18.0, 36, 6.0, "IBM Text-to-Speech (TTS)\nAgent Question -> Audio Synthesis", "Natural Voice AllisonV3")
+    ax.text(voice_x + voice_w/2, voice_y - 2.0, "Supporting Voice Services Branch", fontsize=8.8, fontweight='bold', color='#B45309', ha='center', va='center', zorder=4)
+    ax.text(voice_x + voice_w/2, voice_y - 3.8, "IBM Speech-to-Text  ->  Agent  ->  IBM Text-to-Speech", fontsize=7.2, fontweight='semibold', color='#D97706', ha='center', va='center', zorder=4)
+
+    # Box inside voice: STT
+    draw_box(voice_x + 2.0, voice_y - 5.5, voice_w - 4.0, 4.2, "IBM Speech-to-Text (STT)", "Candidate Voice -> Transcribed Text -> Agent", fc="#FFFFFF", ec="#FDE68A", tc="#92400E")
+    
+    # Box inside voice: TTS
+    draw_box(voice_x + 2.0, voice_y - 10.5, voice_w - 4.0, 4.2, "IBM Text-to-Speech (TTS)", "Agent Question -> Audio Synthesis -> AI Voice", fc="#FFFFFF", ec="#FDE68A", tc="#92400E")
+
+    # Connect Voice box to Agent and Candidate Answer
+    draw_arrow((voice_x + voice_w, voice_y - 7.5), (right_x, 60.0), style="<->", color="#F59E0B", lw=1.2)
+    draw_arrow((left_x + box_w, 22.0), (voice_x, voice_y - 12.0), style="<->", color="#F59E0B", lw=1.2, rad=0.15)
 
     # ─────────────────────────────────────────────────────────────────────────
-    # 4. CONNECTORS & FLOW ARROWS
+    # FOOTER LABELS (IBM Cloud & IBM Bob)
     # ─────────────────────────────────────────────────────────────────────────
-    # Frontend -> Backend (HTTPS REST)
-    draw_conn((75.5, 66.0), (75.5, 56.0), label="HTTPS REST API", color="#2563EB", lw=2.0)
-
-    # Backend -> Storage
-    draw_conn((21.5, 40.5), (21.5, 33.0), label="", color="#475569")
-    draw_conn((46.5, 40.5), (46.5, 33.0), label="", color="#475569")
-
-    # Backend Express -> Internal modules
-    draw_conn((65, 50.0), (20.5, 48.0), color="#64748B", rad=0.08)
-    draw_conn((70, 50.0), (47.5, 48.0), color="#64748B")
-    draw_conn((75.5, 50.0), (75.5, 48.0), color="#64748B")
-    draw_conn((81, 50.0), (104, 48.0), color="#64748B")
-    draw_conn((86, 50.0), (135, 48.0), color="#64748B", rad=-0.08)
-
-    # IAM Manager -> watsonx API (Bearer Token)
-    draw_conn((20.5, 40.5), (26, 26.0), label="Bearer Auth", color="#0F62FE", lw=1.6)
-
-    # Prompt Builder / Express -> watsonx API (Chat Completions)
-    draw_conn((47.5, 40.5), (39, 23.0), label="Chat Completions Payload", color="#0F62FE", lw=1.8)
-
-    # watsonx API -> Interview Trainer Agent
-    draw_conn((39, 20.0), (43, 20.0), color="#0F62FE", lw=1.8)
-
-    # Agent <-> RAG Knowledge Base (Bidirectional)
-    draw_conn((76, 20.0), (80, 20.0), style="<->", label="RAG Grounding", color="#16A34A", lw=2.0)
-
-    # Express -> Speech Services
-    draw_conn((135.5, 40.5), (130, 25.5), label="Voice Audio / REST", color="#D97706", lw=1.4)
-
-    # ─────────────────────────────────────────────────────────────────────────
-    # FOOTER: Platform & Dev Notes
-    # ─────────────────────────────────────────────────────────────────────────
-    ax.plot([6, 154], [7.5, 7.5], color='#CBD5E1', lw=1.0, zorder=2)
+    ax.plot([8, 152], [9.0, 9.0], color='#E2E8F0', lw=1.2, zorder=2)
 
     # Left note: IBM Cloud
-    ax.add_patch(FancyBboxPatch((6, 1.8), 71, 4.8, boxstyle="round,pad=0.2", fc='#FFFFFF', ec='#CBD5E1', lw=1.0, zorder=3))
-    ax.text(8.5, 4.2, "IBM Cloud:", fontsize=8.2, fontweight='bold', color='#0F172A', va='center', zorder=4)
-    ax.text(20.5, 4.2, "Cloud environment supporting IBM watsonx Orchestrate & Speech services.",
+    ax.add_patch(FancyBboxPatch((8, 3.0), 68, 4.8, boxstyle="round,pad=0.2", fc='#F8FAFC', ec='#CBD5E1', lw=1.0, zorder=3))
+    ax.text(10.5, 5.4, "IBM Cloud:", fontsize=8.2, fontweight='bold', color='#0F172A', va='center', zorder=4)
+    ax.text(22.5, 5.4, "Cloud environment supporting IBM watsonx Orchestrate & Speech services.",
             fontsize=7.6, color='#475569', va='center', zorder=4)
 
     # Right note: IBM Bob
-    ax.add_patch(FancyBboxPatch((83, 1.8), 71, 4.8, boxstyle="round,pad=0.2", fc='#FFFFFF', ec='#CBD5E1', lw=1.0, zorder=3))
-    ax.text(85.5, 4.2, "IBM Bob:", fontsize=8.2, fontweight='bold', color='#0F172A', va='center', zorder=4)
-    ax.text(96.0, 4.2, "Development environment used to build and refine the application & agent workflow.",
+    ax.add_patch(FancyBboxPatch((84, 3.0), 68, 4.8, boxstyle="round,pad=0.2", fc='#F8FAFC', ec='#CBD5E1', lw=1.0, zorder=3))
+    ax.text(86.5, 5.4, "IBM Bob:", fontsize=8.2, fontweight='bold', color='#0F172A', va='center', zorder=4)
+    ax.text(97.5, 5.4, "Development environment used to build and refine the application & agent workflow.",
             fontsize=7.6, color='#475569', va='center', zorder=4)
 
     plt.tight_layout()
@@ -237,4 +245,4 @@ def draw_block_diagram():
     print(f"Generated: {svg_path}")
 
 if __name__ == '__main__':
-    draw_block_diagram()
+    draw_clean_architecture()
