@@ -10,6 +10,8 @@
 [![SQLite](https://img.shields.io/badge/SQLite-3-003b57?style=for-the-badge&logo=sqlite&logoColor=white)](https://www.sqlite.org/)
 [![Vite](https://img.shields.io/badge/Vite-8.2-646cff?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38b2ac?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Live Demo on Vercel](https://img.shields.io/badge/Live%20Demo-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://ai-interview-trainer-eight.vercel.app/)
+[![Backend on Render](https://img.shields.io/badge/Backend%20API-Render-46E3B7?style=for-the-badge&logo=render&logoColor=black)](https://ai-interview-trainer-backend-5s3m.onrender.com)
 
 ---
 
@@ -541,9 +543,12 @@ This project was developed as part of the **IBM SkillsBuild / AICTE Internship i
 
 ---
 
-## 🔗 Repository
+## 🔗 Live Application & Repository Links
 
-- **Repository:** [https://github.com/rukeshsg/AI-Interview-Trainer](https://github.com/rukeshsg/AI-Interview-Trainer)
+- **Live Frontend (Vercel):** [https://ai-interview-trainer-eight.vercel.app/](https://ai-interview-trainer-eight.vercel.app/)
+- **Live Backend API (Render):** [https://ai-interview-trainer-backend-5s3m.onrender.com](https://ai-interview-trainer-backend-5s3m.onrender.com)
+- **API Health Check Endpoint:** [https://ai-interview-trainer-backend-5s3m.onrender.com/api/health](https://ai-interview-trainer-backend-5s3m.onrender.com/api/health)
+- **GitHub Repository:** [https://github.com/rukeshsg/AI-Interview-Trainer](https://github.com/rukeshsg/AI-Interview-Trainer)
 - **Recommended GitHub Topics:** `ai`, `artificial-intelligence`, `interview-preparation`, `rag`, `ibm`, `ibm-watsonx`, `watsonx-orchestrate`, `ibm-cloud`, `react`, `typescript`
 - **Demo Video:** [docs/videos/chat-response.mp4](docs/videos/chat-response.mp4)
 
