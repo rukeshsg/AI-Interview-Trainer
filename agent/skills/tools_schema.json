@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Interview Trainer Agent Skills & Tools",
+    "version": "2.0.0",
+    "description": "Skill actions and tool contracts executed by the Interview Trainer Agent in IBM watsonx Orchestrate."
+  },
+  "paths": {
+    "/tools/generateQuestions": {
+      "post": {
+        "summary": "Generate adaptive interview questions",
+        "operationId": "generateQuestions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["candidateName", "targetRole", "experienceLevel", "interviewType", "difficulty", "questionCount"],
+                "properties": {
+                  "candidateName": { "type": "string" },
+                  "targetRole": { "type": "string" },
+                  "experienceLevel": { "type": "string", "enum": ["fresher", "entry", "intermediate", "experienced"] },
+                  "skills": { "type": "array", "items": { "type": "string" } },
+                  "interviewType": { "type": "string", "enum": ["technical", "hr", "behavioral", "mixed"] },
+                  "difficulty": { "type": "string", "enum": ["easy", "medium", "hard", "adaptive"] },
+                  "questionCount": { "type": "integer", "minimum": 1, "maximum": 15 },
+                  "resumeContext": { "type": "string" },
+                  "targetCompany": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Generated questions list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "questions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "questionNumber": { "type": "integer" },
+                          "question": { "type": "string" },
+                          "topic": { "type": "string" },
+                          "difficulty": { "type": "string" },
+                          "type": { "type": "string" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/evaluateAnswer": {
+      "post": {
+        "summary": "Evaluate candidate answer across 5 scoring dimensions",
+        "operationId": "evaluateAnswer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["question", "answer", "candidateProfile"],
+                "properties": {
+                  "question": {
+                    "type": "object",
+                    "properties": {
+                      "question": { "type": "string" },
+                      "topic": { "type": "string" },
+                      "difficulty": { "type": "string" },
+                      "type": { "type": "string" }
+                    }
+                  },
+                  "answer": { "type": "string" },
+                  "candidateProfile": {
+                    "type": "object",
+                    "properties": {
+                      "name": { "type": "string" },
+                      "targetRole": { "type": "string" },
+                      "experienceLevel": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Granular 5-rubric evaluation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "technicalAccuracy": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "relevance": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "clarity": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "completeness": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "communication": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "overallScore": { "type": "number", "minimum": 1, "maximum": 10 },
+                    "strengths": { "type": "array", "items": { "type": "string" } },
+                    "areasForImprovement": { "type": "array", "items": { "type": "string" } },
+                    "modelAnswer": { "type": "string" },
+                    "actionableTips": { "type": "array", "items": { "type": "string" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

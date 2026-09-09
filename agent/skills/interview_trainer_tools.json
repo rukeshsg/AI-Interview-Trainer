@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "IBM watsonx Orchestrate — Interview Trainer Agent Custom Skills",
+    "version": "2.0.0",
+    "description": "OpenAPI skill declarations for IBM watsonx Orchestrate agent integration with AI Interview Trainer backend."
+  },
+  "servers": [
+    {
+      "url": "https://ai-interview-trainer-backend-5s3m.onrender.com",
+      "description": "Production Render Backend"
+    },
+    {
+      "url": "http://localhost:3001",
+      "description": "Local Development Server"
+    }
+  ],
+  "paths": {
+    "/tools/generateQuestions": {
+      "post": {
+        "summary": "Generate questions using IBM Granite & RAG Knowledge",
+        "operationId": "generateQuestions",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateQuestionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully generated questions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenerateQuestionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tools/evaluateAnswer": {
+      "post": {
+        "summary": "Evaluate answer with 5-rubric scoring",
+        "operationId": "evaluateAnswer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvaluateAnswerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully evaluated answer",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvaluateAnswerResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GenerateQuestionsRequest": {
+        "type": "object",
+        "required": ["candidateName", "targetRole", "experienceLevel", "interviewType", "difficulty", "questionCount"],
+        "properties": {
+          "candidateName": { "type": "string" },
+          "targetRole": { "type": "string" },
+          "experienceLevel": { "type": "string", "enum": ["fresher", "entry", "intermediate", "experienced"] },
+          "skills": { "type": "array", "items": { "type": "string" } },
+          "interviewType": { "type": "string", "enum": ["technical", "hr", "behavioral", "mixed"] },
+          "difficulty": { "type": "string", "enum": ["easy", "medium", "hard", "adaptive"] },
+          "questionCount": { "type": "integer" },
+          "resumeContext": { "type": "string" },
+          "targetCompany": { "type": "string" }
+        }
+      },
+      "GenerateQuestionsResponse": {
+        "type": "object",
+        "properties": {
+          "questions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "questionNumber": { "type": "integer" },
+                "question": { "type": "string" },
+                "topic": { "type": "string" },
+                "difficulty": { "type": "string" },
+                "type": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "EvaluateAnswerRequest": {
+        "type": "object",
+        "required": ["question", "answer", "candidateProfile"],
+        "properties": {
+          "question": { "type": "object" },
+          "answer": { "type": "string" },
+          "candidateProfile": { "type": "object" }
+        }
+      },
+      "EvaluateAnswerResponse": {
+        "type": "object",
+        "properties": {
+          "technicalAccuracy": { "type": "number" },
+          "relevance": { "type": "number" },
+          "clarity": { "type": "number" },
+          "completeness": { "type": "number" },
+          "communication": { "type": "number" },
+          "overallScore": { "type": "number" },
+          "strengths": { "type": "array", "items": { "type": "string" } },
+          "areasForImprovement": { "type": "array", "items": { "type": "string" } },
+          "modelAnswer": { "type": "string" },
+          "actionableTips": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

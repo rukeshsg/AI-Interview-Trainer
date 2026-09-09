@@ -1,0 +1,59 @@
+{
+  "scoringRubrics": [
+    {
+      "dimension": "Technical Accuracy",
+      "weight": 0.30,
+      "description": "Correctness of technical concepts, algorithms, syntax, architectural reasoning, and domain depth.",
+      "bands": {
+        "exceptional_9_10": "Flawless technical correctness, covers edge cases, nuances, and internal workings.",
+        "proficient_7_8": "Accurate concepts with minor omissions of low-impact details.",
+        "developing_5_6": "Basic understanding present, but contains conceptual gaps or slight inaccuracies.",
+        "inadequate_1_4": "Incorrect information, fundamental misunderstanding, or failure to answer the core technical question."
+      }
+    },
+    {
+      "dimension": "Relevance",
+      "weight": 0.25,
+      "description": "Direct alignment with the prompt without off-topic filler, evasion, or generic generalizations.",
+      "bands": {
+        "exceptional_9_10": "Pinpoint focus on the question with zero filler or evasive language.",
+        "proficient_7_8": "Addresses all core parts of the question directly.",
+        "developing_5_6": "Somewhat tangential or addresses only part of a multi-part prompt.",
+        "inadequate_1_4": "Completely off-topic or fails to answer the question asked."
+      }
+    },
+    {
+      "dimension": "Clarity",
+      "weight": 0.20,
+      "description": "Logical sequencing, structured communication, conciseness, and precise terminology.",
+      "bands": {
+        "exceptional_9_10": "Superbly structured (e.g. top-down, STAR, or architectural flow), clear, concise, and easy to follow.",
+        "proficient_7_8": "Well-organized with clear progression of ideas.",
+        "developing_5_6": "Slightly rambling or disorganized flow.",
+        "inadequate_1_4": "Incoherent, difficult to parse, or contradictory."
+      }
+    },
+    {
+      "dimension": "Completeness",
+      "weight": 0.15,
+      "description": "Coverage of edge cases, trade-offs, real-world examples, and measurable results.",
+      "bands": {
+        "exceptional_9_10": "Thorough coverage of trade-offs, failure modes, scale constraints, and concrete examples.",
+        "proficient_7_8": "Covers primary solution and at least one trade-off or real-world example.",
+        "developing_5_6": "Surface-level answer without trade-off analysis.",
+        "inadequate_1_4": "One-line or severely truncated response."
+      }
+    },
+    {
+      "dimension": "Communication",
+      "weight": 0.10,
+      "description": "Articulate delivery, professional tone, confidence, and stakeholder awareness.",
+      "bands": {
+        "exceptional_9_10": "Executive-level communication, confident, professional, and engaging.",
+        "proficient_7_8": "Clear professional demeanor and appropriate tone.",
+        "developing_5_6": "Hesitant, colloquial, or overly informal tone.",
+        "inadequate_1_4": "Unprofessional or unengaging response."
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+# IBM watsonx Orchestrate Agent Configuration Manifest
+schema_version: "2.0"
+agent:
+  id: "e3823416-2b52-48ed-8c8a-853e3b0e39d1"
+  env_id: "806c2d20-a62e-4668-b0b2-1f860c72750a"
+  name: "Interview Trainer Agent"
+  version: "v2.0"
+  status: "live"
+  service_region: "jp-tok"
+  model: "ibm/granite-13b-chat-v2"
+
+service:
+  instance_id: "d9911a40-8cc3-40fd-830a-4ce5990442c0"
+  base_url: "https://api.jp-tok.watson-orchestrate.cloud.ibm.com/instances/d9911a40-8cc3-40fd-830a-4ce5990442c0"
+  auth_url: "https://iam.cloud.ibm.com/identity/token"
+
+runtime_parameters:
+  temperature: 0.2
+  max_tokens: 1500
+  stream: false
+  response_format: "application/json"
+
+skills:
+  - id: "skill_generate_questions"
+    name: "Question Generation Skill"
+    openapi_spec: "skills/interview_trainer_tools.json"
+    operation: "generateQuestions"
+  - id: "skill_evaluate_answer"
+    name: "5-Rubric Evaluation Skill"
+    openapi_spec: "skills/interview_trainer_tools.json"
+    operation: "evaluateAnswer"
+  - id: "skill_model_answer"
+    name: "Model Answer Skill"
+    openapi_spec: "skills/interview_trainer_tools.json"
+    operation: "generateModelAnswer"
+  - id: "skill_coaching_summary"
+    name: "Performance Dossier Skill"
+    openapi_spec: "skills/interview_trainer_tools.json"
+    operation: "generateSummary"
+
+knowledge_grounding:
+  enabled: true
+  provider: "watsonx_discovery_rag"
+  collections:
+    - "knowledge_base/interview_rubrics.json"
+    - "knowledge_base/star_methodology.md"
+    - "knowledge_base/technical_domains.md"

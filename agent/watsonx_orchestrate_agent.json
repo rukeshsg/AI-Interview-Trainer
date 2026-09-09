@@ -1,0 +1,74 @@
+{
+  "name": "Interview Trainer Agent",
+  "display_name": "AI Interview Trainer — Career & Technical Coach",
+  "description": "Autonomous AI Interview Coach configured in IBM watsonx Orchestrate. Performs resume-grounded mock interviews, sequential question delivery, 5-rubric objective scoring, reference model answer synthesis, and comprehensive candidate performance reporting.",
+  "agent_id": "e3823416-2b52-48ed-8c8a-853e3b0e39d1",
+  "environment_id": "806c2d20-a62e-4668-b0b2-1f860c72750a",
+  "version": "v2.0",
+  "environment": "live",
+  "status": "published",
+  "created_at": "2026-09-01T00:00:00Z",
+  "updated_at": "2026-09-09T00:00:00Z",
+  "foundation_model": {
+    "provider": "ibm-watsonx-ai",
+    "model_id": "ibm/granite-13b-chat-v2",
+    "parameters": {
+      "decoding_method": "greedy",
+      "max_new_tokens": 1500,
+      "min_new_tokens": 1,
+      "temperature": 0.2,
+      "top_p": 1.0,
+      "repetition_penalty": 1.05
+    }
+  },
+  "service_instance": {
+    "service": "watsonx-orchestrate",
+    "region": "jp-tok",
+    "instance_id": "d9911a40-8cc3-40fd-830a-4ce5990442c0",
+    "base_url": "https://api.jp-tok.watson-orchestrate.cloud.ibm.com/instances/d9911a40-8cc3-40fd-830a-4ce5990442c0",
+    "host_url": "https://jp-tok.watson-orchestrate.cloud.ibm.com",
+    "auth_endpoint": "https://iam.cloud.ibm.com/identity/token"
+  },
+  "system_prompt": "You are the Interview Trainer Agent, an expert AI career coach and hiring manager. Conduct structured, resume-grounded mock interviews. Evaluate candidate responses across 5 core competencies (Technical Accuracy: 30%, Relevance: 25%, Clarity: 20%, Completeness: 15%, Communication: 10%). Return well-formed structured JSON for all tool calls.",
+  "skills": [
+    {
+      "name": "generate_interview_questions",
+      "description": "Generates calibrated, domain-specific interview questions based on candidate resume, experience level, target role, and difficulty.",
+      "tool_ref": "skills/interview_trainer_tools.json#/paths/~1tools~1generateQuestions"
+    },
+    {
+      "name": "evaluate_candidate_answer",
+      "description": "Evaluates candidate answers across 5 dimensions, providing numerical scores, strengths, growth areas, actionable tips, and model answers.",
+      "tool_ref": "skills/interview_trainer_tools.json#/paths/~1tools~1evaluateAnswer"
+    },
+    {
+      "name": "generate_model_answer",
+      "description": "Synthesizes expert-level reference model answers and key talking points.",
+      "tool_ref": "skills/interview_trainer_tools.json#/paths/~1tools~1modelAnswer"
+    },
+    {
+      "name": "synthesize_session_dossier",
+      "description": "Aggregates overall session performance, generates readiness verdicts and 7-day study plans.",
+      "tool_ref": "skills/interview_trainer_tools.json#/paths/~1tools~1sessionSummary"
+    }
+  ],
+  "knowledge_base": {
+    "type": "RAG_retrieval",
+    "collections": [
+      "star_behavioral_rubrics",
+      "technical_domain_competencies",
+      "standardized_scoring_matrices"
+    ],
+    "grounding_strategy": "vector_semantic_search_with_reranking"
+  },
+  "voice_integration": {
+    "speech_to_text": {
+      "service": "IBM Watson Speech to Text",
+      "model": "en-US_BroadbandModel"
+    },
+    "text_to_speech": {
+      "service": "IBM Watson Text to Speech",
+      "voice": "en-US_AllisonV3Voice"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "rag_collections": [
+    {
+      "id": "collection_star_behavioral",
+      "name": "STAR Behavioral Framework & Benchmarks",
+      "description": "Enterprise evaluation criteria for Situation, Task, Action, and Result responses in HR & Behavioral rounds.",
+      "source_document": "knowledge_base/star_methodology.md",
+      "vector_embedding_model": "ibm/slate-30m-english-rtrvr",
+      "chunk_size": 512,
+      "chunk_overlap": 64
+    },
+    {
+      "id": "collection_technical_domains",
+      "name": "Software Engineering & Data Science Competency Benchmarks",
+      "description": "Core technical interview rubrics for Algorithms, Distributed Systems, Database Optimization, LLMs, and Cloud.",
+      "source_document": "knowledge_base/technical_domains.md",
+      "vector_embedding_model": "ibm/slate-30m-english-rtrvr",
+      "chunk_size": 512,
+      "chunk_overlap": 64
+    },
+    {
+      "id": "collection_scoring_rubrics",
+      "name": "Standardized 5-Dimension Scoring Matrix",
+      "description": "Weighted score guidelines for Technical Accuracy, Relevance, Clarity, Completeness, and Communication.",
+      "source_document": "knowledge_base/interview_rubrics.json",
+      "vector_embedding_model": "ibm/slate-30m-english-rtrvr",
+      "chunk_size": 256,
+      "chunk_overlap": 32
+    }
+  ]
+}

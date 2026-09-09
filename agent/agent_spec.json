@@ -1,0 +1,48 @@
+{
+  "name": "Interview Trainer Agent",
+  "description": "Enterprise-grade AI Interview Coach configured in IBM watsonx Orchestrate for candidate profiling, adaptive mock interviews, 5-rubric scoring, and career coaching.",
+  "agent_id": "e3823416-2b52-48ed-8c8a-853e3b0e39d1",
+  "agent_env_id": "806c2d20-a62e-4668-b0b2-1f860c72750a",
+  "version": "v2.0",
+  "environment": "live",
+  "platform": "IBM watsonx Orchestrate",
+  "foundation_model": "IBM Granite / watsonx.ai",
+  "endpoints": {
+    "iam_token": "https://iam.cloud.ibm.com/identity/token",
+    "chat_completions": "https://api.jp-tok.watson-orchestrate.cloud.ibm.com/instances/d9911a40-8cc3-40fd-830a-4ce5990442c0/v1/orchestrate/e3823416-2b52-48ed-8c8a-853e3b0e39d1/chat/completions",
+    "agent_detail": "https://api.jp-tok.watson-orchestrate.cloud.ibm.com/instances/d9911a40-8cc3-40fd-830a-4ce5990442c0/v1/orchestrate/agents/e3823416-2b52-48ed-8c8a-853e3b0e39d1"
+  },
+  "capabilities": [
+    "context_aware_question_generation",
+    "resume_grounded_interviews",
+    "five_dimension_rubric_scoring",
+    "model_answer_synthesis",
+    "real_time_career_coaching",
+    "final_session_dossier_generation"
+  ],
+  "interview_types": [
+    "technical",
+    "hr",
+    "behavioral",
+    "mixed"
+  ],
+  "experience_levels": [
+    "fresher",
+    "entry",
+    "intermediate",
+    "experienced"
+  ],
+  "difficulty_modes": [
+    "easy",
+    "medium",
+    "hard",
+    "adaptive"
+  ],
+  "evaluation_rubrics": {
+    "technicalAccuracy": 0.30,
+    "relevance": 0.25,
+    "clarity": 0.20,
+    "completeness": 0.15,
+    "communication": 0.10
+  }
+}
